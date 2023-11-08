@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+
 import 'vocabulary.dart';
 
 class VocabularyScreen extends StatelessWidget {
@@ -13,14 +15,31 @@ class VocabularyScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Day $day Vocabulary'),
       ),
-      body: ListView.builder(
-        itemCount: vocabulary.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(vocabulary[index].english), // 영어 단어를 표시
-            subtitle: Text(vocabulary[index].korean), // 한국어 뜻을 표시
-          );
-        },
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Swiper(
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    vocabulary[index].english,
+                    style: TextStyle(fontSize: 24.0),
+                  ),
+                  SizedBox(height: 20.0), // 단어와 뜻 사이에 간격을 줍니다.
+                  Text(
+                    vocabulary[index].korean,
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ],
+              ),
+            );
+          },
+          itemCount: vocabulary.length,
+          pagination: SwiperPagination(),
+          control: SwiperControl(),
+        ),
       ),
     );
   }
